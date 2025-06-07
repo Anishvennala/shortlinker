@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .short-url {
+            font-size: 18px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+        .short-url:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<h1>URL Shortener</h1>
+
+<label for="originalUrl">Enter the URL to shorten:</label>
+<input type="text" id="originalUrl" placeholder="https://example.com" required>
+
+<button onclick="shortenUrl()">Shorten URL</button>
+
+<div class="result" id="result">
+    <!-- Shortened URL will appear here -->
+</div>
+
+<script>
+    function shortenUrl() {
+        const originalUrl = document.getElementById("originalUrl").value;
+        if (!originalUrl) {
+            alert("Please enter a URL!");
+            return;
+        }
+
+        // Make a POST request to the Spring Boot backend
+        fetch('http://localhost:8080/shorten', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain'
+            },
+            body: originalUrl
+        })
+            .then(response => response.text())
+            .then(shortenedUrl => {
+                document.getElementById("result").innerHTML = `
+                    <p>Your shortened URL is:</p>
+                    <a href="http://localhost:8080/${shortenedUrl}" class="short-url" target="_blank">
+                        http://localhost:8080/${shortenedUrl}
+                    </a>
+                `;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was an error shortening your URL. Please try again.');
+            });
+    }
+</script>
+
+</body>
+</html>
