@@ -21,7 +21,7 @@ public class URLShortener {
 
     //represents repo connected to sql DB
     @Autowired
-    private UrlMappingRepository repository;
+    UrlMappingRepository repository;
 
     //In-memory cache: shortCode -> originalUrl
     private final HashMap<String, String> cache = new HashMap<>();
