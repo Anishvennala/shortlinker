@@ -11,34 +11,30 @@
 * [Architecture](#architecture)
 * [End-to-End Workflow](#end-to-end-workflow)
 * [Setup Instructions](#setup-instructions)
-* [Usage](#usage)
 * [API Endpoints](#api-endpoints)
-* [Screenshots](#screenshots)
 * [Testing](#testing)
-* [Challenges & Learnings](#-challenges--learnings)
+* [Key Learning Outcomes](#-key-learning-outcomes)
 * [Future Improvements](#-future-improvements)
 
 ---
 
 ## Features
 
-* Shorten long URLs into short, easy-to-share links
-* Redirect from short link to original URL
-* Optional support for:
-
-    * Custom aliases
-    * URL expiration
-    * Analytics
-
+* Shorten long URLs into short, easy-to-share links.
+* Redirect from short link to original URL.
+* Caching: Efficient in-memory cache to speed up URL lookups for recently accessed short codes.
+* Collision Handling: Handles hash collisions by modifying original URL and re-hashing until unique code generated.
 ---
 
 ## Tech Stack
 
 * Java 21
 * Spring Boot 3.5
-* Spring Data JPA + MySQL
-* Thymeleaf (HTML templating)
-* JUnit 5 + Mockito (Testing)
+* Spring Data JPA (for database interaction)
+* MySQL (for persistent URL mappings)
+* Thymeleaf (front-end rendering)
+* JUnit 5 (for unit testing)
+* Mockito (for mocking dependencies in tests)
 * Maven (Build & dependency management)
 
 ---
@@ -87,6 +83,9 @@
       * Correct short code generation
       * Proper redirection behaviour 
       * Handling of invalid or duplicate URLs
+
+---
+
 ## Setup Instructions
 
 1. **Clone the repository**
@@ -95,9 +94,11 @@
    git clone https://github.com/Anishvennala/shortlinker.git
    cd shortlinker
    ```
-
-2. **Configure MySQL Database** Edit `src/main/resources/application.properties`:
-
+2. **Create database named "shortlinker" in MySQL**
+```sql
+   CREATE DATABASE shortlinker;
+```
+* Edit /resources/application.properties:
    ```properties
    spring.datasource.url=jdbc:mysql://localhost:3306/shortlinker
    spring.datasource.username=yourUsername
@@ -106,9 +107,10 @@
    ```
 
 3. **Build and run the project**
-
-   ```bash
-   mvn spring-boot:run
+* Use Maven to build and run application:
+   ```bash                               
+   ./mvnw clean install
+   ./mvnw spring-boot:run
    ```
 
 4. **Open in your browser**
@@ -116,15 +118,6 @@
    ```
    http://localhost:8080
    ```
-
----
-
-## Usage
-
-* Enter a long URL in the form on the homepage
-* Click the "Shorten" button
-* Receive a shortened URL like `http://localhost:8080/abc123`
-* Accessing the short link redirects you to the original long URL
 
 ---
 
@@ -137,7 +130,7 @@
 
   ```json
   {
-    "originalUrl": "https://example.com/some/long/path"
+    "originalUrl": "https://example.com"
   }
   ```
 * **Response**:
@@ -148,8 +141,6 @@
   }
   ```
 
----
-
 ### `GET /{shortCode}`
 
 * **Description**: Redirects to the original URL
@@ -157,47 +148,59 @@
 
 ---
 
-## Screenshots
-
-> Add screenshots to this folder: `/screenshots`
-
-```markdown
-![Homepage](screenshots/homepage.png)
-![Short URL result](screenshots/result.png)
-```
-
----
-
 ## Testing
 
 * Unit tests written using **JUnit 5** and **Mockito**
-* To run all tests:
+* Run all tests using:
 
   ```bash
-  mvn test
+  ./mvnw test
   ```
-
 ---
 
-## 🧐 Challenges & Learnings
+## 🎓 Key Learning Outcomes
 
-* Implemented unique short code generation
-* Learned URL validation and redirection logic
-* Practiced building layered architecture with Spring Boot
-* Wrote unit tests for services and controllers
-* Integrated MySQL using Spring Data JPA
+
+### Use of `Optional<T>` in Java
+* Learned to use `Optional<T>` to safely handle potentially null return values from database queries.
+* Helped avoid `NullPointerException` and encouraged cleaner conditional logic (e.g., `ifPresent`, `orElseGet`).
+
+### Understanding Model–Repository–Service Architecture
+* Designed an `@Entity` model class (`UrlMapping`) that maps to a MySQL table storing short codes and original URLs.
+* Used `JpaRepository` in `UrlMappingRepository` to leverage built-in CRUD operations and create custom query methods (`findByOriginalUrl`, `findByShortCode`) with minimal code.
+* Integrated the repository into a service layer (`URLShortener`) for business logic, making the codebase modular and scalable.
+
+### Environment Variable Management in Spring Boot
+* Used the `export` command to set `DB_USERNAME` and `DB_PASSWORD` as environment variables.
+* Accessed them in `application.properties` using `${DB_USERNAME}` and `${DB_PASSWORD}` for secure and flexible database configuration.
+
+### Testing with Mockito and JUnit 5
+* Wrote unit tests using JUnit 5 and Mockito to mock the repository and validate the `shortenURL` logic.
+* Ensured database interaction logic worked correctly without hitting a real database.
+
+### Spring Boot and MySQL Integration
+* Connected the Spring Boot app to a local MySQL instance.
+* Configured `spring.datasource.*` and Hibernate settings to auto-create tables and show SQL logs for debugging.
+
+### Running and Debugging a Spring Boot App Locally
+* Learned to start the application locally on `localhost:8080`.
+* Inspected errors like DB connection failure and verified DB status via the MySQL CLI.
 
 ---
 
 ## 🌱 Future Improvements
 
-*
+* Add user accounts and history of shortened links
+* Track analytics (e.g., click count, short URL visits)
+* Expiration system for links
+* Deploy project to cloud platform
 
 ---
 
 ## Contact
 
-Built by [Anish Vennala](https://github.com/Anishvennala) – feel free to reach out for collaboration or feedback!
+Built by [Anish Vennala](https://github.com/Anishvennala)  
+📫 [LinkedIn](https://www.linkedin.com/in/anish-vennala) – Let’s connect!
 
 ---
 

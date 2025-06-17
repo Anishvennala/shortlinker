@@ -30,13 +30,14 @@ public class URLShortener {
     public String shortenURL(String input) {
         String longUrl = input.replaceAll("\\s", "");
 
-        // Check if already exists
-        Optional<UrlMapping> existing = repository.findByOriginalUrl(longUrl);
+        // Check if there is already an existing entity in the table
+        Optional<UrlMapping> existingEntity = repository.findByOriginalUrl(longUrl);
         String shortCode;
-        if (existing.isPresent()) {
-            shortCode = existing.get().getShortCode();
+        if (existingEntity.isPresent()) {
+            shortCode = existingEntity.get().getShortCode();
         }
         else{
+            //use md5 hash to create a unique short code
             shortCode = HashUtil.getMD5Hash(longUrl).substring(0,7);
 
             //handle collisions
@@ -48,7 +49,7 @@ public class URLShortener {
                 incr++;
             }
 
-            //save to DB
+            //save a new entity to the table in DB
             UrlMapping newMapping = new UrlMapping(longUrl, shortCode);
             repository.save(newMapping);
         }

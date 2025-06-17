@@ -1,3 +1,7 @@
+//The model (@Entity class) is the representation of my data. it maps directly to the DB table.
+//This defines the structure of db table storing long urls and corresponding short codes
+
+
 package com.shortlinker.model;
 
 import jakarta.persistence.*;
