@@ -9,13 +9,14 @@
 * [Features](#features)
 * [Tech Stack](#tech-stack)
 * [Architecture](#architecture)
+* [End-to-End Workflow](#end-to-end-workflow)
 * [Setup Instructions](#setup-instructions)
 * [Usage](#usage)
 * [API Endpoints](#api-endpoints)
 * [Screenshots](#screenshots)
 * [Testing](#testing)
-* [Challenges & Learnings](#challenges--learnings)
-* [Future Improvements](#future-improvements)
+* [Challenges & Learnings](#-challenges--learnings)
+* [Future Improvements](#-future-improvements)
 
 ---
 
