@@ -56,6 +56,36 @@
 
 ---
 
+## End-to-End Workflow
+
+1. **User Interface (Frontend)**
+   * User opens the homepage (http://localhost:8080) rendered using Thymeleaf.
+   * A form is shown for the user to paste a long URL and submit by clicking a "Shorten" button.
+2. **Controller Layer (Spring Boot)**
+   * The form sends a **POST** request to endpoint /shorten.
+   * The URLShortenerController receives the post request and forwards the long URL to the **service layer**.
+3. **Service Layer (Application Logic)** 
+   * Validation: Checks if the input URL is valid.
+   * Duplicate Check: Searches the database to see if the URL already exists and has a short code. 
+   * Short Code Generation: If it’s a new URL, a unique short code (e.g., abc123) is generated using a hash or random alphanumeric logic.
+   * Persistence: The mapping of the original URL and the short code is saved in the MySQL database via the repository.
+4. **Repository Layer (Data Access)**
+   * This layer uses Spring Data JPA to interact with MySQL DB.
+   * Stores original URL, short code and creation date.
+5. **Response to User**
+   * Service returns the short URL (e.g., http://localhost:8080/abc123) to the controller.
+   * The controller sends this to the frontend and renders to UI for the user to copy, use it or visit link.
+6. **Redirection Workflow**
+   * When short URL is clicked, the app performs GET request to /{shortCode}.
+   * Controller receives short code and asks service to find matching long URL. 
+   * If it's found, controller sends HTTP redirect respond (302 Found) to long URL.
+   * User's browser is redirected to the actual site of short URL.
+7. **Testing**
+    * Logic is tested using JUnit 5 and Mockito.
+    * Tests verify:
+      * Correct short code generation
+      * Proper redirection behaviour 
+      * Handling of invalid or duplicate URLs
 ## Setup Instructions
 
 1. **Clone the repository**
