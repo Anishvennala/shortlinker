@@ -44,12 +44,13 @@
 ```
 [User]
    ↓
-[Controller] → [Service Layer] → [Repository] → [MySQL Database]
+[Controller] → [Service Layer] → [Repository] → [Model (@Entity)] → [MySQL Database]
 ```
 
 * **Controller**: Handles HTTP requests and responses
 * **Service**: Contains business logic (e.g., generate short codes)
 * **Repository**: Interfaces with MySQL using JPA
+* **Model**: Defines structure of table in DB 
 
 ---
 
