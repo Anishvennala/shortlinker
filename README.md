@@ -167,12 +167,12 @@
 * Helped avoid `NullPointerException` and encouraged cleaner conditional logic (e.g., `ifPresent`, `orElseGet`).
 
 ### Understanding Model–Repository–Service Architecture
-* Designed an `@Entity` model class (`UrlMapping`) that maps to a MySQL table storing short codes and original
-  URLs.
-* Used `JpaRepository` in `UrlMappingRepository` to leverage built-in CRUD operations and create custom query
-  methods (`findByOriginalUrl`, `findByShortCode`) with minimal code.
-* Integrated the repository into a service layer (`URLShortener`) for business logic, making the codebase modular
-  and scalable.
+* Designed an `@Entity` model class (`UrlMapping`) that maps to a MySQL table storing short codes and
+  original URLs.
+* Used `JpaRepository` in `UrlMappingRepository` to leverage built-in CRUD operations and create custom
+  query methods (`findByOriginalUrl`, `findByShortCode`) with minimal code.
+* Integrated the repository into a service layer (`URLShortener`) for business logic, making the codebase
+  modular and scalable.
 
 ### Spring Boot and MySQL Integration
 * Connected the Spring Boot app to a local MySQL instance.
@@ -184,8 +184,8 @@
 
 ### Environment Variable Management in Spring Boot
 * Used the `export` command to set `DB_USERNAME` and `DB_PASSWORD` as environment variables.
-* Accessed them in `application.properties` using `${DB_USERNAME}` and `${DB_PASSWORD}` for secure and flexible
-  database configuration.
+* Accessed them in `application.properties` using `${DB_USERNAME}` and `${DB_PASSWORD}` for secure and
+  flexible database configuration.
 
 ### Running and Debugging a Spring Boot App Locally
 * Learned to start the application locally on `localhost:8080`.
