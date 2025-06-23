@@ -208,7 +208,3 @@ Built by [Anish Vennala](https://github.com/Anishvennala)
 📫 [LinkedIn](https://www.linkedin.com/in/anish-vennala) – Let’s connect!
 
 ---
-
-## License
-
-This project is open-source and available under the [MIT License](LICENSE).
